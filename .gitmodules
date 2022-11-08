@@ -1,3 +1,6 @@
 [submodule "tests/data/S-101_Portrayal-Catalogue"]
 	path = tests/data/S-101_Portrayal-Catalogue
 	url = https://github.com/iho-ohi/S-101_Portrayal-Catalogue.git
+[submodule "S-101_Portrayal-Catalogue"]
+	path = S-101_Portrayal-Catalogue
+	url = https://github.com/iho-ohi/S-101_Portrayal-Catalogue.git
