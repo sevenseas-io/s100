@@ -5,12 +5,6 @@ use s100::feature::catalog::FeatureCatalog;
 #[test]
 #[allow(non_snake_case)]
 fn read_S_101_FC_main() {
-    let path = env::current_dir().unwrap();
-    println!("Current directory: {:?}", path.file_name().unwrap());
-    for entry in fs::read_dir(path).unwrap() {
-        println!("\t{}", entry.unwrap().path().to_str().unwrap())
-    }
-
     let path = env::current_dir()
         .unwrap()
         .join("tests")
