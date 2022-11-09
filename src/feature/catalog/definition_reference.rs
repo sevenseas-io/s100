@@ -7,6 +7,7 @@ use super::{DEFINITION_REFERENCE, XML_REF};
 const SOURCE_IDENTIFIER: &str = "sourceIdentifier";
 const DEFINITION_SOURCE: &str = "definitionSource";
 
+#[derive(Clone, Debug)]
 pub struct DefinitionReference {
     source_identifier: String,
     definition_source: String,

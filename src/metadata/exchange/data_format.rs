@@ -2,7 +2,7 @@ use std::str::FromStr;
 
 use crate::Error;
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum DataFormat {
     ISO8211,
     GML,

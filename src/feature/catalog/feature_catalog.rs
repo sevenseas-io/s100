@@ -6,6 +6,7 @@ use crate::{Error, Result};
 
 const SIMPLE_ATTRIBUTES: &str = "S100_FC_SimpleAttributes";
 
+#[derive(Clone, Debug)]
 pub struct FeatureCatalog {
     simple_attributes: Vec<SimpleAttribute>,
 }
@@ -37,6 +38,7 @@ impl FeatureCatalog {
                                         }
                                     }
                                 }
+                                "" => {}
                                 _ => {
                                     //TODO: return error if we find unrecognized element
                                 }

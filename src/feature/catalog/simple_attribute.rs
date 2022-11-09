@@ -18,6 +18,7 @@ const ALIAS: &str = "alias";
 const VALUE_TYPE: &str = "valueType";
 const LISTED_VALUES: &str = "listedValues";
 
+#[derive(Clone, Debug)]
 pub struct SimpleAttribute {
     name: String,
     definition: String,
@@ -133,8 +134,8 @@ impl SimpleAttribute {
     }
 
     pub fn definition_reference(&self) -> Option<&DefinitionReference> {
-        match self.definition_reference.as_ref() {
-            Some(val) => Some(&val),
+        match &self.definition_reference {
+            Some(val) => Some(val),
             None => None,
         }
     }

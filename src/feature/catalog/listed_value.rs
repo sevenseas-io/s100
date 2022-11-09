@@ -7,6 +7,7 @@ const LABEL: &str = "label";
 const DEFINITION: &str = "definition";
 const CODE: &str = "code";
 
+#[derive(Clone, Debug)]
 pub struct ListedValue {
     label: String,
     definition: String,
@@ -72,8 +73,8 @@ impl ListedValue {
     }
 
     pub fn definition_reference(&self) -> Option<&DefinitionReference> {
-        match self.definition_reference.as_ref() {
-            Some(val) => Some(&val),
+        match &self.definition_reference {
+            Some(val) => Some(val),
             None => None,
         }
     }

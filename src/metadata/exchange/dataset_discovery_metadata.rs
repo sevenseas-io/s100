@@ -86,7 +86,7 @@ impl DatasetDiscoveryMetadata {
     }
 
     pub fn data_type_version(&self) -> &str {
-        &self.data_type_version.as_str()
+        self.data_type_version.as_str()
     }
 }
 

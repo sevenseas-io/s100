@@ -1,6 +1,6 @@
 use super::LinePlacementMode;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct AreaSymbolPlacement {
     placement_mode: LinePlacementMode,
 }

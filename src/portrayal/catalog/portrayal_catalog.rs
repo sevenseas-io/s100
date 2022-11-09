@@ -243,8 +243,8 @@ impl PortrayalCatalog {
     }
 
     pub fn alert_catalog(&self) -> Option<&AlertCatalog> {
-        match self.alert_catalog.as_ref() {
-            Some(val) => Some(&val),
+        match &self.alert_catalog {
+            Some(val) => Some(val),
             None => None,
         }
     }

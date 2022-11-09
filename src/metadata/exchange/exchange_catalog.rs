@@ -37,6 +37,7 @@ impl ExchangeCatalog {
                                         }
                                     }
                                 }
+                                "" => {}
                                 _ => {
                                     //TODO: return error if we find unrecognized element
                                 }

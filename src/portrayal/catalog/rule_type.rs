@@ -2,7 +2,7 @@ use std::str::FromStr;
 
 use crate::Error;
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Eq, Debug, PartialEq)]
 pub enum RuleType {
     SubTemplate,
     TopLevelTemplate,
