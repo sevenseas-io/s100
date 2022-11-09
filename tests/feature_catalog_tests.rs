@@ -1,5 +1,6 @@
 use s100::feature::catalog::FeatureCatalog;
 
+#[ignore]
 #[test]
 #[allow(non_snake_case)]
 fn read_S_101_FC_main() {
