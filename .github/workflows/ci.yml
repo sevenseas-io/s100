@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         rust: [stable]
-        target: [x86_64-unknown-linux-gnu, arm-unknown-linux-gnueabihf]
+        target: [x86_64-unknown-linux-gnu, armv7-unknown-linux-gnueabihf]
 
         include:
           # Test MSRV
@@ -24,6 +24,19 @@ jobs:
     steps:
       - name: Install libxml2
         run: sudo apt-get install -y libxml2-dev
+        if: matrix.target == x86_64-unknown-linux-gnu
+
+      - name: Install libxml2
+        run: |
+          sudo dpkg --add-architecture armhf
+          sudo apt-get install -y libxml2-dev:armhf
+          export SYSROOT=/usr/arm-linux-gnueabihf
+          export PKG_CONFIG_ALLOW_CROSS=1
+          export PKG_CONFIG_LIBDIR=/usr/lib/arm-linux-gnueabihf/pkgconfig
+          export PKG_CONFIG_SYSROOT_DIR=${SYSROOT}
+          export PKG_CONFIG_SYSTEM_LIBRARY_PATH=/usr/lib/arm-linux-gnueabihf
+          export PKG_CONFIG_SYSTEM_INCLUDE_PATH=/usr/arm-linux-gnueabihf/include
+        if: matrix.target == armv7-unknown-linux-gnueabihf
 
       - name: Checkout source
         uses: actions/checkout@v2
@@ -33,7 +46,7 @@ jobs:
         with:
           profile: minimal
           toolchain: ${{ matrix.rust }}
-          target: ${{ matrix.target }}
+          target: x86_64-unknown-linux-gnu
           override: true
           components: rustfmt, clippy
 
@@ -41,7 +54,6 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: check
-          args: --target=${{ matrix.target }}
 
   test:
     name: Test
