@@ -32,12 +32,8 @@ pub struct SimpleAttribute {
 
 impl SimpleAttribute {
     pub(super) fn parse(node: Node) -> Result<SimpleAttribute> {
-        let node_name = node.get_name();
-        if node_name != SIMPLE_ATTRIBUTE {
-            return Err(Error::Parse(format!(
-                "'{}' received a node named '{}'",
-                SIMPLE_ATTRIBUTE, node_name
-            )));
+        if node.get_name() != SIMPLE_ATTRIBUTE {
+            return Error::invalid_child(node);
         }
 
         let mut name: Option<String> = None;
