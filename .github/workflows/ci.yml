@@ -29,6 +29,7 @@ jobs:
       - name: Install libxml2
         run: |
           sudo dpkg --add-architecture armhf
+          sudo apt-get update
           sudo apt-get install -y libxml2-dev:armhf
           export SYSROOT=/usr/arm-linux-gnueabihf
           export PKG_CONFIG_ALLOW_CROSS=1
