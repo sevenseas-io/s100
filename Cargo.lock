@@ -33,6 +33,11 @@ dependencies = [
 ]
 
 [[package]]
+name = "iso8211"
+version = "0.1.1-alpha.4"
+source = "git+https://github.com/sevenseas-io/iso8211.git#b555ef330430eab5b4f7f7f5bf34187b73a1240c"
+
+[[package]]
 name = "libc"
 version = "0.2.137"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -75,8 +80,9 @@ dependencies = [
 
 [[package]]
 name = "s100"
-version = "0.1.1-alpha.2"
+version = "0.1.1-alpha.1"
 dependencies = [
+ "iso8211",
  "libxml",
  "tempfile",
 ]

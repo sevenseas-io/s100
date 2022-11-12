@@ -7,12 +7,16 @@ edition = "2021"
 keywords = ["iho", "s-100"]
 name = "s100"
 readme = "README.md"
+license = "MIT OR Apache-2.0"
 repository = "https://github.com/sevenseas-io/s100"
-version = "0.1.1-alpha.2"
-publish = false
+version = "0.1.1-alpha.1"
+
+[badges]
+maintenance = { status = "experimental" }
 
 [dependencies]
 libxml = "0.3"
+iso8211 = { git = "https://github.com/sevenseas-io/iso8211.git", version = "0.1.1-alpha.4" }
 
 [dev-dependencies]
 tempfile = "3.3"
