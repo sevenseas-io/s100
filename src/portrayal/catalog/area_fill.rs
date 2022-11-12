@@ -138,6 +138,6 @@ mod tests {
 
         assert_eq!(target.file_name, "testPCB.xml");
         assert_eq!(target.file_type, FileType::AreaFill);
-        assert_eq!(target.file_format, FileFormat::XML);
+        assert_eq!(target.file_format, FileFormat::Xml);
     }
 }

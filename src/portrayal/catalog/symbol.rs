@@ -135,6 +135,6 @@ mod tests {
 
         assert_eq!(target.file_name, "BOYCON01.svg");
         assert_eq!(target.file_type, FileType::Symbol);
-        assert_eq!(target.file_format, FileFormat::SVG);
+        assert_eq!(target.file_format, FileFormat::Svg);
     }
 }

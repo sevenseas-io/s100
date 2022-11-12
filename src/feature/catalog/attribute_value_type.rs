@@ -13,9 +13,9 @@ pub enum AttributeValueType {
     Time,
     DateTime,
     TruncatedDate,
-    URI,
-    URL,
-    URN,
+    Uri,
+    Url,
+    Urn,
 }
 
 impl FromStr for AttributeValueType {
@@ -32,9 +32,9 @@ impl FromStr for AttributeValueType {
             "time" => Ok(AttributeValueType::Time),
             "dateTime" => Ok(AttributeValueType::DateTime),
             "S100_TruncatedDate" => Ok(AttributeValueType::DateTime),
-            "URI" => Ok(AttributeValueType::URI),
-            "URL" => Ok(AttributeValueType::URL),
-            "URN" => Ok(AttributeValueType::URN),
+            "URI" => Ok(AttributeValueType::Uri),
+            "URL" => Ok(AttributeValueType::Url),
+            "URN" => Ok(AttributeValueType::Urn),
             _ => S100Error::invalid_enum("valueType", input),
         }
     }

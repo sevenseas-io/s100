@@ -134,6 +134,6 @@ mod tests {
 
         assert_eq!(target.file_name, "AlertCatalog-S101.xml");
         assert_eq!(target.file_type, FileType::AlertCatalog);
-        assert_eq!(target.file_format, FileFormat::XML);
+        assert_eq!(target.file_format, FileFormat::Xml);
     }
 }

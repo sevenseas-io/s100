@@ -8,7 +8,7 @@ mod color;
 pub use color::Color;
 
 mod csr_type;
-pub use csr_type::CRSType;
+pub use csr_type::CrsType;
 
 mod point;
 pub use point::Point;

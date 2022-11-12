@@ -1,7 +1,7 @@
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub enum CRSType {
-    GeographicCRS,
-    PortrayalCRS,
-    LocalCRS,
-    LlineCRS,
+pub enum CrsType {
+    Geographic,
+    Portrayal,
+    Local,
+    Line,
 }

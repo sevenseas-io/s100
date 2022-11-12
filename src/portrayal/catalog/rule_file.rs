@@ -154,6 +154,6 @@ mod tests {
 
         assert_eq!(target.file_name, "AdministrationArea_Plain.xsl");
         assert_eq!(target.file_type, FileType::Rule);
-        assert_eq!(target.file_format, FileFormat::XSLT);
+        assert_eq!(target.file_format, FileFormat::Xslt);
     }
 }

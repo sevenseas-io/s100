@@ -7,7 +7,7 @@ pub use line_placement_mode::LinePlacementMode;
 mod line_symbol_placement;
 pub use line_symbol_placement::LineSymbolPlacement;
 
-use crate::portrayal::{CRSType, Color, Vector};
+use crate::portrayal::{Color, CrsType, Vector};
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Symbol {
@@ -18,7 +18,7 @@ pub struct Symbol {
     override_colors: Vec<Color>,
     reference: String,
     rotation: f64,
-    rotation_csr: CRSType,
+    rotation_csr: CrsType,
     scale_factor: f64,
 }
 
@@ -51,7 +51,7 @@ impl Symbol {
         self.rotation
     }
 
-    pub fn rotation_csr(&self) -> CRSType {
+    pub fn rotation_csr(&self) -> CrsType {
         self.rotation_csr
     }
 

@@ -138,6 +138,6 @@ mod tests {
 
         assert_eq!(target.file_name, "colorProfile.xml");
         assert_eq!(target.file_type, FileType::ColorProfile);
-        assert_eq!(target.file_format, FileFormat::XML);
+        assert_eq!(target.file_format, FileFormat::Xml);
     }
 }

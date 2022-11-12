@@ -135,6 +135,6 @@ mod tests {
 
         assert_eq!(target.file_name, "daySvgStyle.css");
         assert_eq!(target.file_type, FileType::StyleSheet);
-        assert_eq!(target.file_format, FileFormat::XML);
+        assert_eq!(target.file_format, FileFormat::Xml);
     }
 }
