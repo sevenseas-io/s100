@@ -2,7 +2,7 @@ use libxml::tree::Node;
 use std::str::FromStr;
 
 use super::{DataFormat, DATA_DISCOVERY_METADATA};
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 const FILE_NAME: &str = "fileName";
 const FILE_PATH: &str = "filePath";
@@ -21,7 +21,7 @@ pub struct DatasetDiscoveryMetadata {
 impl DatasetDiscoveryMetadata {
     pub(super) fn parse(node: Node) -> Result<DatasetDiscoveryMetadata> {
         if node.get_name() != DATA_DISCOVERY_METADATA {
-            return Error::invalid_child(node);
+            return S100Error::invalid_child(node);
         }
 
         let mut file_name: Option<String> = None;
@@ -37,7 +37,7 @@ impl DatasetDiscoveryMetadata {
                 DESCRIPTION => description = Some(child_node.get_content()),
                 DATA_TYPE => match DataFormat::from_str(child_node.get_content().as_str()) {
                     Ok(val) => data_type = Some(val),
-                    Err(_) => return Error::invalid_value(child_node),
+                    Err(_) => return S100Error::invalid_value(child_node),
                 },
                 DATA_TYPE_VERSION => data_type_version = Some(child_node.get_content()),
                 _ => {
@@ -48,16 +48,16 @@ impl DatasetDiscoveryMetadata {
         }
 
         if file_name.is_none() {
-            return Error::missing_child(node, FILE_NAME);
+            return S100Error::missing_child(node, FILE_NAME);
         }
         if file_path.is_none() {
-            return Error::missing_child(node, FILE_PATH);
+            return S100Error::missing_child(node, FILE_PATH);
         }
         if description.is_none() {
-            return Error::missing_child(node, DESCRIPTION);
+            return S100Error::missing_child(node, DESCRIPTION);
         }
         if data_type.is_none() {
-            return Error::missing_child(node, DATA_TYPE_VERSION);
+            return S100Error::missing_child(node, DATA_TYPE_VERSION);
         }
 
         Ok(DatasetDiscoveryMetadata {

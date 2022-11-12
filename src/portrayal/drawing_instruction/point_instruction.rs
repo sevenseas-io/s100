@@ -46,6 +46,6 @@ impl DrawingInstruction for PointInstruction {
     }
 
     fn spatial_reference(&self) -> &[SpatialReference] {
-        &self.spatial_reference[..]
+        &self.spatial_reference
     }
 }

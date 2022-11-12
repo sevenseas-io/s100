@@ -12,7 +12,6 @@ version = "0.1.1-alpha.2"
 publish = false
 
 [dependencies]
-thiserror = "1.0"
 libxml = "0.3"
 
 [dev-dependencies]

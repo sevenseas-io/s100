@@ -2,7 +2,7 @@ use libxml::tree::Node;
 use std::str::FromStr;
 
 use super::{CatalogItem, Description, ExternalFile, FileFormat, FileType, ALERT_CATALOG, XML_ID};
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 const DESCRIPTION: &str = "description";
 const FILE_NAME: &str = "fileName";
@@ -21,7 +21,7 @@ pub struct AlertCatalog {
 impl AlertCatalog {
     pub(super) fn parse(node: Node) -> Result<AlertCatalog> {
         if node.get_name() != ALERT_CATALOG {
-            return Error::invalid_child(node);
+            return S100Error::invalid_child(node);
         }
 
         let id: Option<String> = node.get_attribute(XML_ID);
@@ -41,27 +41,27 @@ impl AlertCatalog {
                 }
                 FILE_TYPE => match FileType::from_str(child_node.get_content().as_str()) {
                     Ok(val) => file_type = Some(val),
-                    Err(_) => return Error::invalid_value(child_node),
+                    Err(_) => return S100Error::invalid_value(child_node),
                 },
                 FILE_FORMAT => match FileFormat::from_str(child_node.get_content().as_str()) {
                     Ok(val) => file_format = Some(val),
-                    Err(_) => return Error::invalid_value(child_node),
+                    Err(_) => return S100Error::invalid_value(child_node),
                 },
-                _ => return Error::invalid_child(child_node),
+                _ => return S100Error::invalid_child(child_node),
             };
         }
 
         if id.is_none() {
-            return Error::missing_attribute(node, XML_ID);
+            return S100Error::missing_attribute(node, XML_ID);
         }
         if file_name.is_none() {
-            return Error::missing_child(node, FILE_NAME);
+            return S100Error::missing_child(node, FILE_NAME);
         }
         if file_type.is_none() {
-            return Error::missing_child(node, FILE_TYPE);
+            return S100Error::missing_child(node, FILE_TYPE);
         }
         if file_format.is_none() {
-            return Error::missing_child(node, FILE_FORMAT);
+            return S100Error::missing_child(node, FILE_FORMAT);
         }
 
         Ok(AlertCatalog {
@@ -80,7 +80,7 @@ impl CatalogItem for AlertCatalog {
     }
 
     fn descriptions(&self) -> &[Description] {
-        &self.descriptions[..]
+        &self.descriptions
     }
 }
 

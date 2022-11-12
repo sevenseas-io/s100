@@ -44,7 +44,7 @@ impl Symbol {
     }
 
     pub fn override_colors(&self) -> &[Color] {
-        &self.override_colors[..]
+        &self.override_colors
     }
 
     pub fn rotation(&self) -> f64 {

@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use crate::Error;
+use crate::S100Error;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum FileType {
@@ -16,7 +16,7 @@ pub enum FileType {
 }
 
 impl FromStr for FileType {
-    type Err = Error;
+    type Err = S100Error;
 
     fn from_str(input: &str) -> Result<FileType, Self::Err> {
         match input {
@@ -29,7 +29,7 @@ impl FromStr for FileType {
             "Pixmap" => Ok(FileType::Pixmap),
             "Rule" => Ok(FileType::Rule),
             "StyleSheet" => Ok(FileType::StyleSheet),
-            _ => Error::invalid_enum("fileType", input),
+            _ => S100Error::invalid_enum("fileType", input),
         }
     }
 }

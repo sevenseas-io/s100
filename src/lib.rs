@@ -1,5 +1,5 @@
 mod error;
-pub use error::{Error, Result};
+pub use error::{Result, S100Error};
 
 pub mod feature;
 

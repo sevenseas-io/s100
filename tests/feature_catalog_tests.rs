@@ -1,4 +1,4 @@
-use std::{env, fs};
+use std::env;
 
 use s100::feature::catalog::FeatureCatalog;
 

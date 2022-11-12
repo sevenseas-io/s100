@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use crate::Error;
+use crate::S100Error;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum AttributeValueType {
@@ -19,7 +19,7 @@ pub enum AttributeValueType {
 }
 
 impl FromStr for AttributeValueType {
-    type Err = Error;
+    type Err = S100Error;
 
     fn from_str(input: &str) -> Result<AttributeValueType, Self::Err> {
         match input {
@@ -35,7 +35,7 @@ impl FromStr for AttributeValueType {
             "URI" => Ok(AttributeValueType::URI),
             "URL" => Ok(AttributeValueType::URL),
             "URN" => Ok(AttributeValueType::URN),
-            _ => Error::invalid_enum("valueType", input),
+            _ => S100Error::invalid_enum("valueType", input),
         }
     }
 }

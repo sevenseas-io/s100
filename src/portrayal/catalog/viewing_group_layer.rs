@@ -1,7 +1,7 @@
 use libxml::tree::Node;
 
 use super::{CatalogItem, Description, DESCRIPTION, VIEWING_GROUP, XML_ID};
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 const VIEWING_GROUP_LAYER: &str = "viewingGroupLayer";
 
@@ -15,7 +15,7 @@ pub struct ViewingGroupLayer {
 impl ViewingGroupLayer {
     pub(super) fn parse(node: Node) -> Result<ViewingGroupLayer> {
         if node.get_name() != VIEWING_GROUP_LAYER {
-            return Error::invalid_child(node);
+            return S100Error::invalid_child(node);
         }
 
         let id: Option<String> = node.get_attribute(XML_ID);
@@ -31,12 +31,12 @@ impl ViewingGroupLayer {
                 VIEWING_GROUP => {
                     viewing_groups.push(child_node.get_content());
                 }
-                _ => return Error::invalid_child(child_node),
+                _ => return S100Error::invalid_child(child_node),
             };
         }
 
         if id.is_none() {
-            return Error::missing_attribute(node, XML_ID);
+            return S100Error::missing_attribute(node, XML_ID);
         }
 
         Ok(ViewingGroupLayer {
@@ -57,7 +57,7 @@ impl CatalogItem for ViewingGroupLayer {
     }
 
     fn descriptions(&self) -> &[Description] {
-        &self.descriptions[..]
+        &self.descriptions
     }
 }
 

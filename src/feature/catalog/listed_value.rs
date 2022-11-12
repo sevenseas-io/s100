@@ -1,7 +1,7 @@
 use libxml::tree::Node;
 
 use super::{DefinitionReference, DEFINITION_REFERENCE, LISTED_VALUE};
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 const LABEL: &str = "label";
 const DEFINITION: &str = "definition";
@@ -18,7 +18,7 @@ pub struct ListedValue {
 impl ListedValue {
     pub(super) fn parse(node: Node) -> Result<ListedValue> {
         if node.get_name() != LISTED_VALUE {
-            return Error::invalid_child(node);
+            return S100Error::invalid_child(node);
         }
 
         let mut label: Option<String> = None;
@@ -32,24 +32,24 @@ impl ListedValue {
                 DEFINITION => definition = Some(child_node.get_content()),
                 CODE => match child_node.get_content().parse() {
                     Ok(val) => code = Some(val),
-                    Err(_) => return Error::invalid_value(child_node),
+                    Err(_) => return S100Error::invalid_value(child_node),
                 },
                 DEFINITION_REFERENCE => match DefinitionReference::parse(child_node) {
                     Ok(val) => definition_reference = Some(val),
                     Err(e) => return Err(e),
                 },
-                _ => return Error::invalid_child(child_node),
+                _ => return S100Error::invalid_child(child_node),
             };
         }
 
         if label.is_none() {
-            return Error::missing_child(node, LABEL);
+            return S100Error::missing_child(node, LABEL);
         }
         if definition.is_none() {
-            return Error::missing_child(node, DEFINITION);
+            return S100Error::missing_child(node, DEFINITION);
         }
         if code.is_none() {
-            return Error::missing_child(node, CODE);
+            return S100Error::missing_child(node, CODE);
         }
 
         Ok(ListedValue {

@@ -6,7 +6,7 @@ use super::{
     Pixmap, RuleFile, StyleSheet, Symbol, ViewingGroup, ViewingGroupLayer, ALERT_CATALOG,
     PORTRAYAL_CATALOG,
 };
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 // Shcema defined here: https://schemas.s100dev.net/schemas/S100/5.0.0/S100PC/20220705/S100PortrayalCatalog.xsd
 #[derive(Debug)]
@@ -222,23 +222,23 @@ impl PortrayalCatalog {
                                         }
                                     }
                                 }
-                                _ => return Error::invalid_child(node),
+                                _ => return S100Error::invalid_child(node),
                             }
                         }
 
                         Ok(portrayal_catalog)
                     } else {
-                        Err(Error::Parse(format!(
+                        Err(S100Error::Parse(format!(
                             "Root node is not {}, found '{} instead",
                             PORTRAYAL_CATALOG,
                             root.get_name(),
                         )))
                     }
                 } else {
-                    Err(Error::Parse("Root node does not exist".to_string()))
+                    Err(S100Error::Parse("Root node does not exist".to_string()))
                 }
             }
-            None => Err(Error::Parse("path is empty".to_string())),
+            None => Err(S100Error::Parse("path is empty".to_string())),
         }
     }
 
@@ -250,19 +250,19 @@ impl PortrayalCatalog {
     }
 
     pub fn area_fills(&self) -> &[AreaFill] {
-        &self.area_fills[..]
+        &self.area_fills
     }
 
     pub fn color_profiles(&self) -> &[ColorProfile] {
-        &self.color_profiles[..]
+        &self.color_profiles
     }
 
     pub fn context(&self) -> &[Parameter] {
-        &self.context[..]
+        &self.context
     }
 
     pub fn fonts(&self) -> &[Font] {
-        &self.fonts[..]
+        &self.fonts
     }
 
     pub fn foundation_mode(&self) -> Vec<&str> {
@@ -270,38 +270,38 @@ impl PortrayalCatalog {
     }
 
     pub fn display_modes(&self) -> &[DisplayMode] {
-        &self.display_modes[..]
+        &self.display_modes
     }
 
     pub fn display_planes(&self) -> &[DisplayPlane] {
-        &self.display_planes[..]
+        &self.display_planes
     }
 
     pub fn line_styles(&self) -> &[LineStyle] {
-        &self.line_styles[..]
+        &self.line_styles
     }
 
     pub fn pixmaps(&self) -> &[Pixmap] {
-        &self.pixmaps[..]
+        &self.pixmaps
     }
 
     pub fn rules(&self) -> &[RuleFile] {
-        &self.rules[..]
+        &self.rules
     }
 
     pub fn style_sheets(&self) -> &[StyleSheet] {
-        &self.style_sheets[..]
+        &self.style_sheets
     }
 
     pub fn symbols(&self) -> &[Symbol] {
-        &self.symbols[..]
+        &self.symbols
     }
 
     pub fn viewing_groups(&self) -> &[ViewingGroup] {
-        &self.viewing_groups[..]
+        &self.viewing_groups
     }
 
     pub fn viewing_group_layers(&self) -> &[ViewingGroupLayer] {
-        &self.viewing_group_layers[..]
+        &self.viewing_group_layers
     }
 }

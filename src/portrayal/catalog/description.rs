@@ -1,6 +1,6 @@
 use libxml::tree::Node;
 
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 const DESCRIPTION: &str = "description";
 const NAME: &str = "name";
@@ -16,7 +16,7 @@ pub struct Description {
 impl Description {
     pub(super) fn parse(node: Node) -> Result<Description> {
         if node.get_name() != DESCRIPTION {
-            return Error::invalid_child(node);
+            return S100Error::invalid_child(node);
         }
 
         let mut name: Option<String> = None;
@@ -28,18 +28,18 @@ impl Description {
                 NAME => name = Some(child_node.get_content()),
                 DESCRIPTION => description = Some(child_node.get_content()),
                 LANGUAGE => language = Some(child_node.get_content()),
-                _ => return Error::invalid_child(child_node),
+                _ => return S100Error::invalid_child(child_node),
             };
         }
 
         if name.is_none() {
-            return Error::missing_child(node, NAME);
+            return S100Error::missing_child(node, NAME);
         }
         if description.is_none() {
-            return Error::missing_child(node, DESCRIPTION);
+            return S100Error::missing_child(node, DESCRIPTION);
         }
         if language.is_none() {
-            return Error::missing_child(node, LANGUAGE);
+            return S100Error::missing_child(node, LANGUAGE);
         }
 
         Ok(Description {

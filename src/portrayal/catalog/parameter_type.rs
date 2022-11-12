@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use crate::Error;
+use crate::S100Error;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum ParameterType {
@@ -12,7 +12,7 @@ pub enum ParameterType {
 }
 
 impl FromStr for ParameterType {
-    type Err = Error;
+    type Err = S100Error;
 
     fn from_str(input: &str) -> Result<ParameterType, Self::Err> {
         match input {
@@ -21,7 +21,7 @@ impl FromStr for ParameterType {
             "Double" => Ok(ParameterType::Double),
             "String" => Ok(ParameterType::String),
             "Date" => Ok(ParameterType::Date),
-            _ => Error::invalid_enum("type", input),
+            _ => S100Error::invalid_enum("type", input),
         }
     }
 }

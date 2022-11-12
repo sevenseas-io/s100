@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use crate::{feature::QUANTITY_SPECIFICATION, Error};
+use crate::{feature::QUANTITY_SPECIFICATION, S100Error};
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum QuantitySpecification {
@@ -23,7 +23,7 @@ pub enum QuantitySpecification {
 }
 
 impl FromStr for QuantitySpecification {
-    type Err = Error;
+    type Err = S100Error;
 
     fn from_str(input: &str) -> Result<QuantitySpecification, Self::Err> {
         match input {
@@ -43,7 +43,7 @@ impl FromStr for QuantitySpecification {
             "volume" => Ok(QuantitySpecification::Volume),
             "weight" => Ok(QuantitySpecification::Weight),
             "otherQuantity" => Ok(QuantitySpecification::OtherQuantity),
-            _ => Err(Error::Parse(format!(
+            _ => Err(S100Error::Parse(format!(
                 "Invalid enum value for '{}': {}",
                 QUANTITY_SPECIFICATION, input
             ))),

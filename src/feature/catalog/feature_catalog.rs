@@ -2,7 +2,7 @@ use libxml::parser::Parser;
 use std::path::Path;
 
 use super::{SimpleAttribute, FEATURE_CATALOG};
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 const SIMPLE_ATTRIBUTES: &str = "S100_FC_SimpleAttributes";
 
@@ -47,21 +47,21 @@ impl FeatureCatalog {
 
                         Ok(feature_catalog)
                     } else {
-                        Err(Error::Parse(format!(
+                        Err(S100Error::Parse(format!(
                             "Root node is not '{}', found '{} instead",
                             FEATURE_CATALOG, root_name,
                         )))
                     }
                 } else {
-                    Err(Error::Parse("Root node does not exist".to_string()))
+                    Err(S100Error::Parse("Root node does not exist".to_string()))
                 }
             }
-            None => Err(Error::Parse("path is empty".to_string())),
+            None => Err(S100Error::Parse("path is empty".to_string())),
         }
     }
 
     pub fn simple_attributes(&self) -> &[SimpleAttribute] {
-        &self.simple_attributes[..]
+        &self.simple_attributes
     }
 }
 

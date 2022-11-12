@@ -1,7 +1,7 @@
 use libxml::tree::Node;
 
 use super::{CatalogItem, Description, DESCRIPTION, XML_ID};
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 const DISPLAY_PLANE: &str = "displayPlane";
 
@@ -14,7 +14,7 @@ pub struct DisplayPlane {
 impl DisplayPlane {
     pub(super) fn parse(node: Node) -> Result<DisplayPlane> {
         if node.get_name() != DISPLAY_PLANE {
-            return Error::invalid_child(node);
+            return S100Error::invalid_child(node);
         }
 
         let id: Option<String> = node.get_attribute(XML_ID);
@@ -26,12 +26,12 @@ impl DisplayPlane {
                     Ok(desc) => descriptions.push(desc),
                     Err(e) => return Err(e),
                 },
-                _ => return Error::invalid_child(child_node),
+                _ => return S100Error::invalid_child(child_node),
             };
         }
 
         if id.is_none() {
-            return Error::missing_attribute(node, XML_ID);
+            return S100Error::missing_attribute(node, XML_ID);
         }
 
         Ok(DisplayPlane {
@@ -47,7 +47,7 @@ impl CatalogItem for DisplayPlane {
     }
 
     fn descriptions(&self) -> &[Description] {
-        &self.descriptions[..]
+        &self.descriptions
     }
 }
 

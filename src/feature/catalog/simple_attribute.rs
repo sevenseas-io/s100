@@ -7,7 +7,7 @@ use super::{
 };
 use crate::{
     feature::{concept::QuantitySpecification, QUANTITY_SPECIFICATION},
-    Error, Result,
+    Result, S100Error,
 };
 
 const NAME: &str = "name";
@@ -34,7 +34,7 @@ pub struct SimpleAttribute {
 impl SimpleAttribute {
     pub(super) fn parse(node: Node) -> Result<SimpleAttribute> {
         if node.get_name() != SIMPLE_ATTRIBUTE {
-            return Error::invalid_child(node);
+            return S100Error::invalid_child(node);
         }
 
         let mut name: Option<String> = None;
@@ -57,14 +57,14 @@ impl SimpleAttribute {
                 VALUE_TYPE => {
                     match AttributeValueType::from_str(child_node.get_content().as_str()) {
                         Ok(val) => value_type = Some(val),
-                        Err(_) => return Error::invalid_value(child_node),
+                        Err(_) => return S100Error::invalid_value(child_node),
                     }
                 }
                 LISTED_VALUES => {
                     for listed_value_node in child_node.get_child_elements() {
                         match ListedValue::parse(listed_value_node) {
                             Ok(listed_value) => listed_values.push(listed_value),
-                            Err(_) => return Error::invalid_value(child_node),
+                            Err(_) => return S100Error::invalid_value(child_node),
                         }
                     }
                 }
@@ -75,7 +75,7 @@ impl SimpleAttribute {
                 QUANTITY_SPECIFICATION => {
                     match QuantitySpecification::from_str(child_node.get_content().as_str()) {
                         Ok(val) => quality_specification = Some(val),
-                        Err(_) => return Error::invalid_value(child_node),
+                        Err(_) => return S100Error::invalid_value(child_node),
                     }
                 }
                 _ => {
@@ -86,16 +86,16 @@ impl SimpleAttribute {
         }
 
         if name.is_none() {
-            return Error::missing_child(node, NAME);
+            return S100Error::missing_child(node, NAME);
         }
         if definition.is_none() {
-            return Error::missing_child(node, DEFINITION);
+            return S100Error::missing_child(node, DEFINITION);
         }
         if code.is_none() {
-            return Error::missing_child(node, CODE);
+            return S100Error::missing_child(node, CODE);
         }
         if value_type.is_none() {
-            return Error::missing_child(node, VALUE_TYPE);
+            return S100Error::missing_child(node, VALUE_TYPE);
         }
 
         Ok(SimpleAttribute {
@@ -130,7 +130,7 @@ impl SimpleAttribute {
     }
 
     pub fn listed_values(&self) -> &[ListedValue] {
-        &self.listed_values[..]
+        &self.listed_values
     }
 
     pub fn definition_reference(&self) -> Option<&DefinitionReference> {

@@ -5,7 +5,7 @@ use libxml::tree::Node;
 use super::{
     CatalogItem, Description, ParameterType, Validate, DESCRIPTION, PARAMETER, VALIDATE, XML_ID,
 };
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 const TYPE: &str = "type";
 const DEFAULT: &str = "default";
@@ -22,7 +22,7 @@ pub struct Parameter {
 impl Parameter {
     pub(super) fn parse(node: Node) -> Result<Parameter> {
         if node.get_name() != PARAMETER {
-            return Error::invalid_child(node);
+            return S100Error::invalid_child(node);
         }
 
         let id: Option<String> = node.get_attribute(XML_ID);
@@ -42,24 +42,24 @@ impl Parameter {
                 }
                 TYPE => match ParameterType::from_str(child_node.get_content().as_str()) {
                     Ok(val) => parameter_type = Some(val),
-                    Err(_) => return Error::invalid_value(child_node),
+                    Err(_) => return S100Error::invalid_value(child_node),
                 },
                 VALIDATE => match Validate::parse(child_node) {
                     Ok(val) => validate = Some(val),
                     Err(e) => return Err(e),
                 },
-                _ => return Error::invalid_child(child_node),
+                _ => return S100Error::invalid_child(child_node),
             };
         }
 
         if id.is_none() {
-            return Error::missing_attribute(node, XML_ID);
+            return S100Error::missing_attribute(node, XML_ID);
         }
         if parameter_type.is_none() {
-            return Error::missing_child(node, TYPE);
+            return S100Error::missing_child(node, TYPE);
         }
         if default.is_none() {
-            return Error::missing_child(node, DEFAULT);
+            return S100Error::missing_child(node, DEFAULT);
         }
 
         Ok(Parameter {
@@ -93,7 +93,7 @@ impl CatalogItem for Parameter {
     }
 
     fn descriptions(&self) -> &[Description] {
-        &self.descriptions[..]
+        &self.descriptions
     }
 }
 

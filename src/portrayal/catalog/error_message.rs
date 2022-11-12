@@ -1,6 +1,6 @@
 use libxml::tree::Node;
 
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 use super::ERROR_MESSAGE;
 
@@ -34,7 +34,7 @@ impl Text {
 impl ErrorMessage {
     pub(super) fn parse(node: Node) -> Result<ErrorMessage> {
         if node.get_name() != ERROR_MESSAGE {
-            return Error::invalid_child(node);
+            return S100Error::invalid_child(node);
         }
 
         let mut texts: Vec<Text> = Vec::new();
@@ -46,7 +46,7 @@ impl ErrorMessage {
                     let language = child_node.get_attribute(LANGUAGE);
                     texts.push(Text { text, language })
                 }
-                _ => return Error::invalid_child(child_node),
+                _ => return S100Error::invalid_child(child_node),
             };
         }
 
@@ -54,7 +54,7 @@ impl ErrorMessage {
     }
 
     pub fn texts(&self) -> &[Text] {
-        &self.texts[..]
+        &self.texts
     }
 }
 

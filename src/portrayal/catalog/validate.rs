@@ -1,7 +1,7 @@
 use libxml::tree::Node;
 
 use super::{ErrorMessage, ERROR_MESSAGE, VALIDATE};
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 const REGEX: &str = "regex";
 const XPATH: &str = "xpath";
@@ -16,7 +16,7 @@ pub struct Validate {
 impl Validate {
     pub(super) fn parse(node: Node) -> Result<Validate> {
         if node.get_name() != VALIDATE {
-            return Error::invalid_child(node);
+            return S100Error::invalid_child(node);
         }
 
         let mut regex: Option<String> = None;
@@ -35,12 +35,12 @@ impl Validate {
                     Ok(msg) => error_message = Some(msg),
                     Err(e) => return Err(e),
                 },
-                _ => return Error::invalid_child(child_node),
+                _ => return S100Error::invalid_child(child_node),
             };
         }
 
         if error_message.is_none() {
-            return Error::missing_child(node, VALIDATE);
+            return S100Error::missing_child(node, VALIDATE);
         }
 
         Ok(Validate {

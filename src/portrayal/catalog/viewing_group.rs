@@ -1,7 +1,7 @@
 use libxml::tree::Node;
 
 use super::{CatalogItem, Description, DESCRIPTION, VIEWING_GROUP, XML_ID};
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 #[derive(Clone, Debug)]
 pub struct ViewingGroup {
     id: String,
@@ -11,7 +11,7 @@ pub struct ViewingGroup {
 impl ViewingGroup {
     pub(super) fn parse(node: Node) -> Result<ViewingGroup> {
         if node.get_name() != VIEWING_GROUP {
-            return Error::invalid_child(node);
+            return S100Error::invalid_child(node);
         }
 
         let id: Option<String> = node.get_attribute(XML_ID);
@@ -23,12 +23,12 @@ impl ViewingGroup {
                     Ok(desc) => descriptions.push(desc),
                     Err(e) => return Err(e),
                 },
-                _ => return Error::invalid_child(child_node),
+                _ => return S100Error::invalid_child(child_node),
             };
         }
 
         if id.is_none() {
-            return Error::missing_attribute(node, XML_ID);
+            return S100Error::missing_attribute(node, XML_ID);
         }
 
         Ok(ViewingGroup {
@@ -44,7 +44,7 @@ impl CatalogItem for ViewingGroup {
     }
 
     fn descriptions(&self) -> &[Description] {
-        &self.descriptions[..]
+        &self.descriptions
     }
 }
 

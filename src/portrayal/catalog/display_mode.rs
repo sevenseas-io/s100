@@ -1,7 +1,7 @@
 use libxml::tree::Node;
 
 use super::{CatalogItem, Description, DESCRIPTION, XML_ID};
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 const DISPLAY_MODE: &str = "displayMode";
 const VIEWING_GROUP_LAYER: &str = "viewingGroupLayer";
@@ -16,7 +16,7 @@ pub struct DisplayMode {
 impl DisplayMode {
     pub(super) fn parse(node: Node) -> Result<DisplayMode> {
         if node.get_name() != DISPLAY_MODE {
-            return Error::invalid_child(node);
+            return S100Error::invalid_child(node);
         }
 
         let id: Option<String> = node.get_attribute(XML_ID);
@@ -32,12 +32,12 @@ impl DisplayMode {
                 VIEWING_GROUP_LAYER => {
                     viewing_group_layers.push(child_node.get_content());
                 }
-                _ => return Error::invalid_child(child_node),
+                _ => return S100Error::invalid_child(child_node),
             };
         }
 
         if id.is_none() {
-            return Error::missing_attribute(node, XML_ID);
+            return S100Error::missing_attribute(node, XML_ID);
         }
 
         Ok(DisplayMode {
@@ -61,7 +61,7 @@ impl CatalogItem for DisplayMode {
     }
 
     fn descriptions(&self) -> &[Description] {
-        &self.descriptions[..]
+        &self.descriptions
     }
 }
 

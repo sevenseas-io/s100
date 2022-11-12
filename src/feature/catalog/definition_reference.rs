@@ -1,6 +1,6 @@
 use libxml::tree::Node;
 
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 use super::{DEFINITION_REFERENCE, XML_REF};
 
@@ -17,7 +17,7 @@ impl DefinitionReference {
     pub(super) fn parse(node: Node) -> Result<DefinitionReference> {
         let node_name = node.get_name();
         if node_name != DEFINITION_REFERENCE {
-            return Err(Error::Parse(format!(
+            return Err(S100Error::Parse(format!(
                 "'{}' received a node named '{}'",
                 DEFINITION_REFERENCE, node_name
             )));
@@ -33,18 +33,18 @@ impl DefinitionReference {
                     if let Some(val) = child_node.get_attribute(XML_REF) {
                         definition_source = Some(val);
                     } else {
-                        return Error::missing_attribute(child_node, DEFINITION_REFERENCE);
+                        return S100Error::missing_attribute(child_node, DEFINITION_REFERENCE);
                     }
                 }
-                _ => return Error::invalid_child(child_node),
+                _ => return S100Error::invalid_child(child_node),
             };
         }
 
         if source_identifier.is_none() {
-            return Error::missing_child(node, SOURCE_IDENTIFIER);
+            return S100Error::missing_child(node, SOURCE_IDENTIFIER);
         }
         if definition_source.is_none() {
-            return Error::missing_child(node, DEFINITION_SOURCE);
+            return S100Error::missing_child(node, DEFINITION_SOURCE);
         }
 
         Ok(DefinitionReference {

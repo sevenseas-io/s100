@@ -2,7 +2,7 @@ use libxml::parser::Parser;
 use std::path::Path;
 
 use super::{DatasetDiscoveryMetadata, EXCHANGE_CATALOG};
-use crate::{Error, Result};
+use crate::{Result, S100Error};
 
 const DATASET_DISCOVERY_METADATA: &str = "datasetDiscoveryMetadata";
 
@@ -46,21 +46,21 @@ impl ExchangeCatalog {
 
                         Ok(exchange_catalog)
                     } else {
-                        Err(Error::Parse(format!(
+                        Err(S100Error::Parse(format!(
                             "Root node is not '{}', found '{} instead",
                             EXCHANGE_CATALOG, root_name,
                         )))
                     }
                 } else {
-                    Err(Error::Parse("Root node does not exist".to_string()))
+                    Err(S100Error::Parse("Root node does not exist".to_string()))
                 }
             }
-            None => Err(Error::Parse("path is empty".to_string())),
+            None => Err(S100Error::Parse("path is empty".to_string())),
         }
     }
 
     pub fn dataset_discovery_metadata(&self) -> &[DatasetDiscoveryMetadata] {
-        &self.dataset_discovery_metadata[..]
+        &self.dataset_discovery_metadata
     }
 }
 
