@@ -2,13 +2,15 @@
 
 S-100 IHO Universal Hydrographic Data Model
 
-[![CI](https://github.com/sevenseas-io/s100/actions/workflows/ci.yml/badge.svg)](https://github.com/sevenseas-io/s100/actions)
+[![ci](https://github.com/sevenseas-io/s100/actions/workflows/ci.yml/badge.svg)](https://github.com/sevenseas-io/s100/actions)
+[![license](https://img.shields.io/badge/license-MIT%20or%20Apache--2-brightgreen)](https://github.com/sevenseas-io/wmm#license)
+[![minimum rustc: 1.59](https://img.shields.io/badge/minimum%20rustc-1.59-yellowgreen?logo=rust)](https://www.whatrustisit.com)
 [![crates.io](https://img.shields.io/crates/v/s100.svg)](https://crates.io/crates/s100)
-[![Documentation](https://docs.rs/s100/badge.svg)](https://docs.rs/s100)
+[![docs](https://docs.rs/s100/badge.svg)](https://docs.rs/s100)
 
 ## Minimum Supported Rust Version (MSRV)
 
-This crate is guaranteed to compile on stable Rust 1.56.0 and up. It *might* compile with older versions but that may change in any new patch release.
+This crate is guaranteed to compile on stable Rust 1.59.0 and up. It *might* compile with older versions but that may change in any new patch release.
 
 ## License
 

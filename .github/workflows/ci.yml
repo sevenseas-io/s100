@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        rust: [1.56.0, stable, nightly]
+        rust: [1.59.0, stable, nightly]
 
     steps:
       - name: Install libxml2
